@@ -1,3 +1,4 @@
+import re
 from urllib.parse import urlencode  # 追加
 
 from django.shortcuts import get_object_or_404, redirect, render  # 追加
@@ -11,6 +12,22 @@ def index(request):
 
 
 def register(request):
+    def is_english(word):  # 追加
+        pattern = re.compile("[a-zA-Z]+")
+        result = pattern.fullmatch(word)
+        if result:
+            return True
+        else:
+            return False
+
+    def is_japanese(word):  # 追加
+        pattern = re.compile("[\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]+")
+        result = pattern.fullmatch(word)
+        if result:
+            return True
+        else:
+            return False
+
     try:
         context = {
             "message": request.GET["message"],
@@ -22,12 +39,16 @@ def register(request):
         en_word = request.POST["en_word"]
         ja_word = request.POST["ja_word"]
 
-        Word.objects.create(en_word=en_word, ja_word=ja_word)
+        if is_english(en_word) and is_japanese(ja_word):  # 追加
+            Word.objects.create(en_word=en_word, ja_word=ja_word)
+            message = en_word + "が作成されました。"
+        else:
+            message = "正しい文字列を入力してください。"
 
         redirect_url = reverse("wordbook:register")
         params = urlencode(
             {
-                "message": en_word + "が作成されました。",
+                "message": message,  # 変更
             }
         )
         url = str(redirect_url) + "?" + str(params)
@@ -83,7 +104,17 @@ def quiz(request):  # 追加
         how_many = all_word_counts
 
     if request.method == "GET":
-        words = all_words.order_by("?")[:how_many]
+        if style == "often_wrong":
+            if mode == "en_to_ja":
+                words = all_words.filter(en_to_ja_correct_count__lt=3).order_by(
+                    "-en_to_ja_incorrect_count"
+                )[:how_many]
+            else:
+                words = all_words.filter(ja_to_en_correct_count__lt=3).order_by(
+                    "-ja_to_en_incorrect_count"
+                )[:how_many]
+        else:
+            words = all_words.order_by("?")[:how_many]
 
         context = {
             "mode": mode,

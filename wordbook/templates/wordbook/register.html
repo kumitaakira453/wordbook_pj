@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>英単語暗記アプリ</title>
+    </head>
+
+    <body>
+        <p>
+            {{ message }}
+        </p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <p>
+                <label for="en_word">
+                    英語：
+                </label>
+                <input type="text" name="en_word" id="en_word">
+            </p>
+            <p>
+                <label for="ja_word">
+                    日本語：
+                </label>
+                <input type="text" name="ja_word" id="ja_word">
+            </p>
+            <p>
+                <button type="submit">
+                    登録
+                </button>
+            </p>
+        </form>
+        <p>
+            <a href="{% url 'wordbook:index' %}">
+                トップに戻る
+            </a>
+        </p>
+    </body>
+
+</html>

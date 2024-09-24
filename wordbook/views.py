@@ -1,6 +1,6 @@
 from urllib.parse import urlencode  # 追加
 
-from django.shortcuts import redirect, render  # 追加
+from django.shortcuts import get_object_or_404, redirect, render  # 追加
 from django.urls import reverse  # 追加
 
 from .models import Word
@@ -11,7 +11,29 @@ def index(request):
 
 
 def register(request):
-    pass
+    try:
+        context = {
+            "message": request.GET["message"],
+        }
+    except:
+        context = {}
+
+    if request.method == "POST":
+        en_word = request.POST["en_word"]
+        ja_word = request.POST["ja_word"]
+
+        Word.objects.create(en_word=en_word, ja_word=ja_word)
+
+        redirect_url = reverse("wordbook:register")
+        params = urlencode(
+            {
+                "message": en_word + "が作成されました。",
+            }
+        )
+        url = str(redirect_url) + "?" + str(params)
+        return redirect(url)
+
+    return render(request, "wordbook/register.html", context)
 
 
 def select(request):  # 追加
@@ -120,5 +142,31 @@ def quiz(request):  # 追加
     return render(request, "wordbook/quiz.html", context)
 
 
-def answer(request):
-    pass
+def answer(request):  # 追加
+    try:
+        how_many = int(request.GET["how_many"])
+    except ValueError:
+        how_many = 0
+        print("ValueError発生")
+
+    info = list()
+    for i in range(1, how_many + 1):
+        word_id = request.GET["word_id" + str(i)]
+        word = get_object_or_404(Word, pk=word_id)
+        answer = request.GET["answer" + str(i)]
+
+        q_and_a = {
+            "word": word,
+            "answer": answer,
+        }
+
+        info.append(q_and_a)
+
+    context = {
+        "mode": request.GET["mode"],
+        "style": request.GET["style"],
+        "how_many": how_many,
+        "info": info,
+    }
+
+    return render(request, "wordbook/answer.html", context)

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>英単語暗記アプリ</title>
+    </head>
+
+    <body>
+        <h1>
+            全{{ how_many }}問
+            {% if mode == "en_to_ja" %}
+            英語→日本語
+            {% else %}
+            日本語→英語
+            {% endif %}
+            {% if style == "all" %}
+            すべての単語
+            {% else %}
+            よく間違える単語
+            {% endif %}
+            解答
+        </h1>
+        <ol>
+            {% if mode == "en_to_ja" %}
+            {% for q_and_a in info %}
+            <li>
+                <p>
+                    {{ q_and_a.word.en_word }}
+                </p>
+                <p>
+                    あなたの解答：{{ q_and_a.answer }}
+                </p>
+                <p>
+                    {% if q_and_a.answer == q_and_a.word.ja_word %}
+                    正
+                    {% else %}
+                    誤 正しい答え：{{ q_and_a.word.ja_word }}
+                    {% endif %}
+                </p>
+            </li>
+            {% endfor %}
+            {% else %}
+            {% for q_and_a in info %}
+            <li>
+                <p>
+                    {{ q_and_a.word.ja_word }}
+                </p>
+                <p>
+                    あなたの解答：{{ q_and_a.answer }}
+                </p>
+                <p>
+                    {% if q_and_a.answer == q_and_a.word.en_word %}
+                    正
+                    {% else %}
+                    誤
+                    正しい答え：{{ q_and_a.word.en_word }}
+                    {% endif %}
+                </p>
+            </li>
+            {% endfor %}
+            {% endif %}
+        </ol>
+        <a href="{% url 'wordbook:select' %}">
+            選択画面に戻る
+        </a>
+    </body>
+
+</html>

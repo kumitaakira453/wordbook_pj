@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>英単語暗記アプリ</title>
+    </head>
+
+    <body>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <h1>
+                全{{ how_many }}問
+                {% if mode == "en_to_ja" %}
+                英語→日本語
+                {% else %}
+                日本語→英語
+                {% endif %}
+                {% if style == "all" %}
+                すべての単語
+                {% else %}
+                よく間違える単語
+                {% endif %}
+            </h1>
+            <ol>
+                {% for word in words %}
+                <li>
+                    <label for="question_{{ forloop.counter }}">
+                        {% if mode == "en_to_ja" %}
+                        {{ word.en_word }}
+                        {% else %}
+                        {{ word.ja_word }}
+                        {% endif %}
+                    </label>
+                    <input type="text" name="question_{{ forloop.counter }}">
+                    <input type="hidden" name="word_{{ forloop.counter }}" value="{{ word.id }}" readonly="readonly">
+                </li>
+                {% endfor %}
+            </ol>
+            <button type="submit">
+                解答
+            </button>
+        </form>
+    </body>
+
+</html>

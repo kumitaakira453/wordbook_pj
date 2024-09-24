@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>英単語暗記アプリ</title>
+    </head>
+
+    <body>
+        <h1>
+            単語一覧
+        </h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>英語</th>
+                    <th>日本語</th>
+                    <th>モード</th>
+                    <th>正解数</th>
+                    <th>不正解数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for word in words %}
+                <tr>
+                    <td rowspan="2">
+                        {{ word.en_word }}
+                    </td>
+                    <td rowspan="2">
+                        {{ word.ja_word }}
+                    </td>
+                    <td>
+                        英→日
+                    </td>
+                    <td>
+                        {{ word.en_to_ja_correct_count }}
+                    </td>
+                    <td>
+                        {{ word.en_to_ja_incorrect_count }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        日→英
+                    </td>
+                    <td>
+                        {{ word.ja_to_en_correct_count }}
+                    </td>
+                    <td>
+                        {{ word.ja_to_en_incorrect_count }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'wordbook:index' %}">
+            トップに戻る
+        </a>
+    </body>
+
+</html>

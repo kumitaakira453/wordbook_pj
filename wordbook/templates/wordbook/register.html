@@ -5,37 +5,41 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>英単語暗記アプリ</title>
+        <!-- Materialize CSS CDN -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     </head>
 
     <body>
-        <p>
-            {{ message }}
-        </p>
-        <form action="" method="POST">
-            {% csrf_token %}
-            <p>
-                <label for="en_word">
-                    英語：
-                </label>
-                <input type="text" name="en_word" id="en_word">
+        <div class="container">
+            <h2 class="center-align">英単語暗記アプリ</h2>
+            <p class="center-align">
+                {{ message }}
             </p>
-            <p>
-                <label for="ja_word">
-                    日本語：
-                </label>
-                <input type="text" name="ja_word" id="ja_word">
-            </p>
-            <p>
-                <button type="submit">
-                    登録
-                </button>
-            </p>
-        </form>
-        <p>
-            <a href="{% url 'wordbook:index' %}">
-                トップに戻る
-            </a>
-        </p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="input-field">
+                    <label for="en_word">英語：</label>
+                    <input type="text" name="en_word" id="en_word">
+                </div>
+                <div class="input-field">
+                    <label for="ja_word">日本語：</label>
+                    <input type="text" name="ja_word" id="ja_word">
+                </div>
+                <div class="center-align">
+                    <button type="submit" class="btn waves-effect waves-light">
+                        登録
+                    </button>
+                </div>
+            </form>
+            <div class="center-align">
+                <a href="{% url 'wordbook:index' %}" class="btn-flat waves-effect">
+                    トップに戻る
+                </a>
+            </div>
+        </div>
+
+        <!-- Materialize JS CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
 
 </html>

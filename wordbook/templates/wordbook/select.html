@@ -5,44 +5,74 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>英単語暗記アプリ</title>
+        <!-- Materialize CSS CDN -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     </head>
 
     <body>
-        <form action="" method="POST">
-            {% csrf_token %}
-            <p>
-                <label for="mode">
-                    モード：
-                </label>
-                <input type="radio" name="mode" id="mode" value="en_to_ja"><span>英→日</span>
-                <input type="radio" name="mode" id="mode" value="ja_to_en"><span></span>日→英</span>
-            </p>
-            <p>
-                <label for="style">
-                    出題形式：
-                </label>
-                <input type="radio" name="style" id="style" value="all"><span>すべての単語</span>
-                <input type="radio" name="style" id="style" value="often_wrong"><span>よく間違える単語</span>
-            </p>
-            <p>
-                <label for="how_many">
-                    問題数：
-                </label>
-                <input type="radio" name="how_many" id="how_many" value=5><span>5</span>
-                <input type="radio" name="how_many" id="how_many" value=10><span>10</span>
-                <input type="radio" name="how_many" id="how_many" value=20><span>20</span>
-            </p>
-            <p>
-                <button type="submit">
-                    開始
-                </button>
-            </p>
-        </form>
-        <p>
-            <a href="{% url 'wordbook:index' %}">
-                トップに戻る
-            </a>
-        </p>
+        <div class="container">
+            <h2 class="center-align">英単語暗記アプリ</h2>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <p>
+                    <label>モード：</label>
+                    <label>
+                        <input type="radio" name="mode" value="en_to_ja">
+                        <span>英→日</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="mode" value="ja_to_en">
+                        <span>日→英</span>
+                    </label>
+                </p>
+                <p>
+                    <label>出題形式：</label>
+                    <label>
+                        <input type="radio" name="style" value="all">
+                        <span>すべての単語</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="style" value="often_wrong">
+                        <span>よく間違える単語</span>
+                    </label>
+                </p>
+                <p>
+                    <label>問題数：</label>
+                    <label>
+                        <input type="radio" name="how_many" value="5">
+                        <span>5</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="how_many" value="10">
+                        <span>10</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="how_many" value="20">
+                        <span>20</span>
+                    </label>
+                </p>
+                <div class="center-align">
+                    <button type="submit" class="btn waves-effect waves-light">
+                        開始
+                    </button>
+                </div>
+            </form>
+            <div class="center-align">
+                <a href="{% url 'wordbook:index' %}" class="btn-flat waves-effect">
+                    トップに戻る
+                </a>
+            </div>
+        </div>
+        <style>
+            form {
+                width: max-content;
+                margin: auto;
+                margin-bottom: 20px;
+            }
+
+        </style>
+        <!-- Materialize JS CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
 
 </html>

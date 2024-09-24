@@ -5,58 +5,49 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>英単語暗記アプリ</title>
+        <!-- Materialize CSS CDN -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     </head>
 
     <body>
-        <h1>
-            単語一覧
-        </h1>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>英語</th>
-                    <th>日本語</th>
-                    <th>モード</th>
-                    <th>正解数</th>
-                    <th>不正解数</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for word in words %}
-                <tr>
-                    <td rowspan="2">
-                        {{ word.en_word }}
-                    </td>
-                    <td rowspan="2">
-                        {{ word.ja_word }}
-                    </td>
-                    <td>
-                        英→日
-                    </td>
-                    <td>
-                        {{ word.en_to_ja_correct_count }}
-                    </td>
-                    <td>
-                        {{ word.en_to_ja_incorrect_count }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        日→英
-                    </td>
-                    <td>
-                        {{ word.ja_to_en_correct_count }}
-                    </td>
-                    <td>
-                        {{ word.ja_to_en_incorrect_count }}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{% url 'wordbook:index' %}">
-            トップに戻る
-        </a>
+        <div class="container">
+            <h2 class="center-align">単語一覧</h2>
+            <table class="highlight centered">
+                <thead>
+                    <tr>
+                        <th>英語</th>
+                        <th>日本語</th>
+                        <th>モード</th>
+                        <th>正解数</th>
+                        <th>不正解数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for word in words %}
+                    <tr>
+                        <td rowspan="2">{{ word.en_word }}</td>
+                        <td rowspan="2">{{ word.ja_word }}</td>
+                        <td>英→日</td>
+                        <td>{{ word.en_to_ja_correct_count }}</td>
+                        <td>{{ word.en_to_ja_incorrect_count }}</td>
+                    </tr>
+                    <tr>
+                        <td>日→英</td>
+                        <td>{{ word.ja_to_en_correct_count }}</td>
+                        <td>{{ word.ja_to_en_incorrect_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="center-align">
+                <a href="{% url 'wordbook:index' %}" class="btn-flat waves-effect">
+                    トップに戻る
+                </a>
+            </div>
+        </div>
+
+        <!-- Materialize JS CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
 
 </html>

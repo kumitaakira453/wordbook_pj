@@ -5,12 +5,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>英単語暗記アプリ</title>
+        <!-- Materialize CSS CDN -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     </head>
 
     <body>
-        <form action="" method="POST">
-            {% csrf_token %}
-            <h1>
+        <div class="container">
+            <h2 class="center-align">
                 全{{ how_many }}問
                 {% if mode == "en_to_ja" %}
                 英語→日本語
@@ -22,26 +23,38 @@
                 {% else %}
                 よく間違える単語
                 {% endif %}
-            </h1>
-            <ol>
-                {% for word in words %}
-                <li>
-                    <label for="question_{{ forloop.counter }}">
-                        {% if mode == "en_to_ja" %}
-                        {{ word.en_word }}
-                        {% else %}
-                        {{ word.ja_word }}
-                        {% endif %}
-                    </label>
-                    <input type="text" name="question_{{ forloop.counter }}">
-                    <input type="hidden" name="word_{{ forloop.counter }}" value="{{ word.id }}" readonly="readonly">
-                </li>
-                {% endfor %}
-            </ol>
-            <button type="submit">
-                解答
-            </button>
-        </form>
+            </h2>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <ol class="collection">
+                    {% for word in words %}
+                    <li class="collection-item">
+                        <div class="input-field">
+                            <label for="question_{{ forloop.counter }}">
+                                {% if mode == "en_to_ja" %}
+                                {{ word.en_word }}
+                                {% else %}
+                                {{ word.ja_word }}
+                                {% endif %}
+                            </label>
+                            <input type="text" id="question_{{ forloop.counter }}"
+                                name="question_{{ forloop.counter }}">
+                            <input type="hidden" name="word_{{ forloop.counter }}" value="{{ word.id }}"
+                                readonly="readonly">
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ol>
+                <div class="center-align">
+                    <button type="submit" class="btn waves-effect waves-light">
+                        解答
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Materialize JS CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
 
 </html>

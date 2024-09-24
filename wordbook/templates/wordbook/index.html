@@ -5,24 +5,50 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>英単語暗記アプリ</title>
+        <!-- Materialize CSS CDN -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     </head>
 
     <body>
-        <p>
-            <a href="{% url 'wordbook:select' %}">
-                クイズ
-            </a>
-        </p>
-        <p>
-            <a href="{% url 'wordbook:register' %}">
-                単語登録
-            </a>
-        </p>
-        <p>
-            <a href="{% url 'wordbook:wordlist' %}">
-                単語一覧
-            </a>
-        </p>
+        <div class="container">
+            <h2 class="center-align">英単語暗記アプリ</h2>
+            <div class="column">
+                <div class="col s12 m4">
+                    <a href="{% url 'wordbook:select' %}" class="btn waves-effect waves-light full-width">
+                        クイズ
+                    </a>
+                </div>
+                <div class="col s12 m4">
+                    <a href="{% url 'wordbook:register' %}" class="btn waves-effect waves-light full-width">
+                        単語登録
+                    </a>
+                </div>
+                <div class="col s12 m4">
+                    <a href="{% url 'wordbook:wordlist' %}" class="btn waves-effect waves-light full-width">
+                        単語一覧
+                    </a>
+                </div>
+            </div>
+        </div>
+        <style>
+            .column {
+                width: max-content;
+                margin: auto;
+                margin-bottom: 20px;
+            }
+
+            .col {
+                margin-top: 30px;
+            }
+
+            a {
+                width: 200px;
+            }
+
+        </style>
+
+        <!-- Materialize JS CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
 
 </html>
